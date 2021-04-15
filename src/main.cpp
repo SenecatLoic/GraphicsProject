@@ -128,6 +128,8 @@ int main(int argc, char *argv[])
     Cube c;
     GLuint vao_decor = generate_vao(c);
     BodyElement torse();
+    Geometry geom = c;
+
     Decor d((Geometry)c,vao_decor,glm::vec3(0,0,0));
 
     GLuint vao_sphere = generate_vao(cube);

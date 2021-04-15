@@ -8,7 +8,7 @@
 
 class Decor : public Geometry {
 public:
-	Decor(Geometry geometry, GLuint vao, glm::vec3 position);
+	Decor(const Geometry& geometry, GLuint vao, glm::vec3 position);
 	void draw(Shader shader);
 private:
 	glm::vec3 position;

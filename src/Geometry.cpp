@@ -47,10 +47,10 @@ Geometry& Geometry::operator=(const Geometry& geom)
 
 Geometry::~Geometry()
 {
-    if (m_vertices)
+    if (m_vertices != NULL)
         free(m_vertices);
-    if (m_normals)
+    if (m_normals != NULL)
         free(m_normals);
-    if (m_uvs)
+    if (m_uvs != NULL)
         free(m_uvs);
 }

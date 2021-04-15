@@ -16,6 +16,9 @@
 #include "Sphere.h"
 #include "Camera.h"
 #include "logger.h"
+#include "BodyElement.h"
+#include "Cube.h"
+#include <Decor.h>
 
 
 #define WIDTH     800
@@ -122,6 +125,10 @@ int main(int argc, char *argv[])
     }
 
     Sphere cube(32, 32);
+    Cube c;
+    GLuint vao_decor = generate_vao(c);
+    BodyElement torse();
+    Decor d((Geometry)c,vao_decor,glm::vec3(0,0,0));
 
     GLuint vao_sphere = generate_vao(cube);
     material m;

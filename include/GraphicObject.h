@@ -10,7 +10,7 @@ class GraphicObject : public Geometry {
 public:
 	GraphicObject();
 	GraphicObject(const Geometry& geometry, GLuint vao, glm::vec3 position);
-	virtual void draw(Shader shader);
+	virtual void draw(Shader shader) = 0;
 protected:
 	glm::vec3 position;
 	GLuint vao;

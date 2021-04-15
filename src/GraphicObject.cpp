@@ -5,3 +5,7 @@ GraphicObject::GraphicObject(const Geometry& geometry, GLuint vao, glm::vec3 pos
 	this->vao = vao;
 	this->position = position;
 }
+
+GraphicObject::GraphicObject() {
+
+}

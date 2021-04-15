@@ -10,8 +10,9 @@
 #include <glm/gtc/type_ptr.hpp>
 #include "Geometry.h"
 #include "Shader.h"
+#include "GraphicObject.h"
 
-class BodyElement : public Geometry {
+class BodyElement : public GraphicObject {
 
 public:
 	BodyElement();
@@ -22,8 +23,7 @@ public:
 
 private:
 	std::vector<BodyElement> childs;
-	glm::vec3 position;
-	GLuint vao;
+
 };
 
 #endif

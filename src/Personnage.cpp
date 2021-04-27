@@ -1,12 +1,15 @@
 #include "Personnage.h"
-
-Personnage::Personnage(BodyElement& body, glm::vec3 position)
+#include <Camera.h>
+#include <stack>
+Personnage::Personnage(BodyElement& body)
 {
 	this->body = body;
-	this->position = position;
-
 }
 
 void Personnage::move(glm::vec3 mouvement) {
 
+}
+
+void Personnage::draw(Shader* shader,std::stack<glm::mat4> stack,Camera camera, struct light light) {
+	body.draw(shader,stack,camera, light);
 }

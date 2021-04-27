@@ -16,10 +16,10 @@ class BodyElement : public GraphicObject {
 
 public:
 	BodyElement();
-	BodyElement(Geometry geometry, GLuint vao, glm::vec3 position);
+	BodyElement(Geometry geometry, GLuint vao, glm::vec3 position,struct material material);
 	const std::vector<BodyElement> getChilds();
 	void addChilds(BodyElement& child);
-	void draw(Shader shader);
+	void draw(Shader* shader, std::stack<glm::mat4> stack,Camera camera, struct light light);
 
 private:
 	std::vector<BodyElement> childs;

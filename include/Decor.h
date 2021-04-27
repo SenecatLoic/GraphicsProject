@@ -9,7 +9,7 @@
 
 class Decor : public GraphicObject{
 public:
-	Decor(const Geometry& geometry, GLuint vao, glm::vec3 position);
+	Decor(const Geometry& geometry, GLuint vao, glm::vec3 position, struct material material);
 	void draw(Shader shader);
 };
 

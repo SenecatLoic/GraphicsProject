@@ -1,6 +1,7 @@
 #include "Decor.h"
 
-Decor::Decor(const Geometry& geometry,GLuint vao, glm::vec3 position) : GraphicObject(geometry,vao,position)
+Decor::Decor(const Geometry& geometry,GLuint vao, glm::vec3 position, struct material material) 
+	: GraphicObject(geometry,vao,position,material)
 {
 
 }

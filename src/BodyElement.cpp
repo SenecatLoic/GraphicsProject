@@ -11,15 +11,23 @@ BodyElement::BodyElement(Geometry geometry, GLuint vao, glm::vec3 position, stru
 {
 }
 
-void BodyElement::addChilds(BodyElement& child) {
+void BodyElement::addChilds(BodyElement* child) {
     childs.push_back(child);
 }
 
+const std::vector<BodyElement*> BodyElement::getChilds() {
+    return childs;
+}
+
 void BodyElement::draw(Shader* shader, std::stack<glm::mat4> stack, Camera camera, struct light light) {
+    stack.push(stack.top() * model);
 
-    glm::mat4 mat = stack.top() * model * localTransformation;
+    glm::mat4 mat = stack.top();
+    mat = mat * localTransformation;
+
+    //glm::mat4 mat = stack.top() * model * localTransformation;
     glm::mat3 inv_model = glm::inverse(glm::mat3(model));
-
+    
     glUseProgram(shader->getProgramID());
     {
         glBindVertexArray(vao);
@@ -59,12 +67,11 @@ void BodyElement::draw(Shader* shader, std::stack<glm::mat4> stack, Camera camer
         //Dessin
         glDrawArrays(GL_TRIANGLES, 0, getNbVertices());
 
-        stack.push(stack.top() * model);
-        for (BodyElement child : childs)
-            child.draw(shader, stack, camera, light);
+        for (BodyElement* child : childs){
+            child->draw(shader, stack, camera, light);
+        }
+            
         stack.pop();
-
-        glBindVertexArray(0);
     }
     glUseProgram(0);
 }

@@ -128,7 +128,7 @@ int main(int argc, char* argv[])
     GLuint vao_head = generate_vao(s);
     BodyElement head(s, vao_head, glm::vec3(0, 1, 0), m);
     head.scale(glm::vec3(0.5,0.5,0.5));
-    head.translate(glm::vec3(0.5,0,0));
+    head.translate(glm::vec3(0,0.5,0));
     chest.addChilds(head);
     //Decor d((Geometry)c,vao_decor,glm::vec3(0,0,0));
     
@@ -136,7 +136,7 @@ int main(int argc, char* argv[])
     GLuint vao_arm_left = generate_vao(arm_l);
     BodyElement arm_left(arm_l, vao_arm_left, glm::vec3(0, 1, 0), m);
     arm_left.scale(glm::vec3(0.5,0.5,0.5));
-    arm_left.translate(glm::vec3(0.5, 0, 0));
+    arm_left.translate(glm::vec3(-0.5, 0, 0));
     chest.addChilds(arm_left);
 
     Cube arm_r;
@@ -150,10 +150,10 @@ int main(int argc, char* argv[])
     GLuint vao_forearm_left = generate_vao(forearm_l);
     BodyElement forearm_left(forearm_l, vao_forearm_left, glm::vec3(0, 1, 0), m);
     forearm_left.scale(glm::vec3(0.5,0.5,0.5));
-    forearm_left.translate(glm::vec3(0.5,0,0));
+    forearm_left.translate(glm::vec3(-0.5,0,0));
     arm_left.addChilds(forearm_left);
 
-    Cone forearm_r(10, 10);
+    /*Cone forearm_r(10, 10);
     GLuint vao_forearm_right = generate_vao(forearm_r);
     BodyElement forearm_right(forearm_r, vao_forearm_right, glm::vec3(0, 1, 0), m);
     forearm_right.scale(glm::vec3(0.5,0.5,0.5));
@@ -186,7 +186,7 @@ int main(int argc, char* argv[])
     BodyElement leg_left(leg_l, vao_leg_left, glm::vec3(0, 1, 0), m);
     leg_left.scale(glm::vec3(0.5,0.5,0.5));
     leg_left.translate(glm::vec3(0.5,0,0));
-    thigh_left.addChilds(leg_left);
+    thigh_left.addChilds(leg_left);*/
 
     Personnage perso(chest);
 

@@ -7,9 +7,9 @@ Personnage::Personnage(BodyElement& body)
 }
 
 void Personnage::move(glm::vec3 mouvement) {
-
+	body.translate(mouvement);
 }
 
 void Personnage::draw(Shader* shader,std::stack<glm::mat4> stack,Camera camera, struct light light) {
-	body.draw(shader,stack,camera, light);
+	body.draw(shader,stack,body.getModel(),camera, light);
 }

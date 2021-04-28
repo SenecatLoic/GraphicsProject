@@ -25,7 +25,7 @@ class GraphicObject : public Geometry {
 public:
 	GraphicObject();
 	GraphicObject(const Geometry& geometry, GLuint vao, glm::vec3 position,material material);
-	virtual void draw(Shader* shader, std::stack<glm::mat4> stack, Camera camera, struct light light) = 0;
+	virtual void draw(Shader* shader, std::stack<glm::mat4> stack, glm::mat4 parentModel, Camera camera, struct light light) = 0;
 	void translate(glm::vec3 move);
 	void rotate(float angle,glm::vec3 axes);
 	void scale(glm::vec3 v);

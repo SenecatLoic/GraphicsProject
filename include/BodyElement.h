@@ -19,7 +19,8 @@ public:
 	BodyElement(Geometry geometry, GLuint vao, glm::vec3 position,struct material material);
 	const std::vector<BodyElement*> getChilds();
 	void addChilds(BodyElement* child);
-	void draw(Shader* shader, std::stack<glm::mat4> stack,Camera camera, struct light light);
+	void draw(Shader* shader, std::stack<glm::mat4> stack,glm::mat4 parentModel,Camera camera, struct light light);
+	glm::mat4 getModel();
 
 private:
 	std::vector<BodyElement*> childs;

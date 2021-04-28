@@ -19,14 +19,19 @@ const std::vector<BodyElement*> BodyElement::getChilds() {
     return childs;
 }
 
-void BodyElement::draw(Shader* shader, std::stack<glm::mat4> stack, Camera camera, struct light light) {
+glm::mat4 BodyElement::getModel() {
+    return model;
+}
+
+void BodyElement::draw(Shader* shader, std::stack<glm::mat4> stack, glm::mat4 parentModel, Camera camera, struct light light) {
     stack.push(stack.top() * model);
 
     glm::mat4 mat = stack.top();
     mat = mat * localTransformation;
 
+    glm::mat4 matrixModelView = parentModel * model;
     //glm::mat4 mat = stack.top() * model * localTransformation;
-    glm::mat3 inv_model = glm::inverse(glm::mat3(model));
+    glm::mat3 inv_model = glm::inverse(glm::mat3(matrixModelView));
     
     glUseProgram(shader->getProgramID());
     {
@@ -42,7 +47,7 @@ void BodyElement::draw(Shader* shader, std::stack<glm::mat4> stack, Camera camer
 
         //Les matrices
         GLint uModelViewMatrix = glGetUniformLocation(shader->getProgramID(), "uModelViewMatrix");
-        glUniformMatrix4fv(uModelViewMatrix, 1, GL_FALSE, glm::value_ptr(model));
+        glUniformMatrix4fv(uModelViewMatrix, 1, GL_FALSE, glm::value_ptr(matrixModelView));
         GLint inv_uModelViewMatrix = glGetUniformLocation(shader->getProgramID(), "inv_uModelViewMatrix");
         glUniformMatrix3fv(inv_uModelViewMatrix, 1, GL_FALSE, glm::value_ptr(inv_model));
 
@@ -68,7 +73,7 @@ void BodyElement::draw(Shader* shader, std::stack<glm::mat4> stack, Camera camer
         glDrawArrays(GL_TRIANGLES, 0, getNbVertices());
 
         for (BodyElement* child : childs){
-            child->draw(shader, stack, camera, light);
+            child->draw(shader, stack, matrixModelView,camera, light);
         }
             
         stack.pop();

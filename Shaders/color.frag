@@ -30,7 +30,7 @@ void main()
 
     vec3 diffuse = kd * max(0.0,dot(norm, lightDir)) * light_color;
 
-    vec4 diffuseAmbient = vec4(ambient + diffuse,1.0);
+    vec4 diffuseAmbient = vec4(ambient + diffuse,1.0) * color;
 
     vec3 specular = ks * pow(max(dot(reflectDir,viewDir), 0.0), alpha) * light_color;
 

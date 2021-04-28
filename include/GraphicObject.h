@@ -29,12 +29,14 @@ public:
 	void translate(glm::vec3 move);
 	void rotate(float angle,glm::vec3 axes);
 	void scale(glm::vec3 v);
+	void loadingTexture(const char* path);
 protected:
 	glm::vec3 position;
 	GLuint vao;
 	material material;
 	glm::mat4 model;
 	glm::mat4 localTransformation;
+	GLuint textureID;
 };
 
 #endif

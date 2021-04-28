@@ -69,9 +69,14 @@ void BodyElement::draw(Shader* shader, std::stack<glm::mat4> stack, glm::mat4 pa
         GLint camera_pos = glGetUniformLocation(shader->getProgramID(), "camera_pos");
         glUniform3fv(camera_pos, 1, glm::value_ptr(camera.getPosition()));
 
+        //Texture
+        glActiveTexture(GL_TEXTURE0);
+        glBindTexture(GL_TEXTURE_2D, textureID);
+        GLint uTexture = glGetUniformLocation(shader->getProgramID(), "uTexture");
+        glUniform1i(uTexture, 0);
         //Dessin
         glDrawArrays(GL_TRIANGLES, 0, getNbVertices());
-
+        glBindTexture(GL_TEXTURE_2D, 0);
         for (BodyElement* child : childs){
             child->draw(shader, stack, matrixModelView,camera, light);
         }

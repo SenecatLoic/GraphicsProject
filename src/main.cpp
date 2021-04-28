@@ -11,6 +11,8 @@
 #include <glm/gtc/matrix_transform.hpp> 
 #include <glm/gtc/type_ptr.hpp>
 
+#include <SDL2/SDL_image.h>
+
 #include "Shader.h"
 #include "Geometry.h"
 #include "Sphere.h"
@@ -111,6 +113,11 @@ int main(int argc, char* argv[])
         return EXIT_FAILURE;
     }
 
+    if (!(IMG_Init(IMG_INIT_PNG) & IMG_INIT_PNG)) {
+        ERROR("Could not load SDL2 image with PNG files\n");
+        return EXIT_FAILURE;
+    }
+
     material m;
     m.alpha = 32;
     m.ka = 0.2f;
@@ -124,6 +131,7 @@ int main(int argc, char* argv[])
     BodyElement chest(c, vao_chest, glm::vec3(0, 1, 0), m);
     chest.scale(glm::vec3(0.5, 0.7, 0.3));
     chest.translate(glm::vec3(0.5, 0, 0));
+    chest.loadingTexture("texture/earth.png");
 
     Sphere s(32, 32);
     GLuint vao_head = generate_vao(s);
@@ -131,15 +139,16 @@ int main(int argc, char* argv[])
     head.scale(glm::vec3(0.5, 0.5, 0.5));
     head.translate(glm::vec3(0, 0.625, 0));
     chest.addChilds(&head);
+    head.loadingTexture("texture/earth.png");
+    //head.loadingTexture("texture/earth.png");
     //Decor d((Geometry)c,vao_decor,glm::vec3(0,0,0));
 
-    Cylinder neck_top(32);
+    /*Cylinder neck_top(32);
     GLuint vao_neck = generate_vao(neck_top);
     BodyElement neck(neck_top, vao_neck, glm::vec3(0, 1, 0), m);
     neck.scale(glm::vec3(0.2, 0.2, 0.15));
     neck.translate(glm::vec3(0, 0.4, 0));
     neck.rotate(1.5, glm::vec3(1, 0, 0));
-
     chest.addChilds(&neck);
 
     Cube arm_l;
@@ -256,9 +265,9 @@ int main(int argc, char* argv[])
     BodyElement hand_left(hand_l, vao_hand_left, glm::vec3(0, 1, 0), m);
     hand_left.scale(glm::vec3(0.14, 0.14, 0.14));
     hand_left.translate(glm::vec3(0, 0, -0.15));
-    forearm_left.addChilds(&hand_left);
+    forearm_left.addChilds(&hand_left);*/
 
-
+    
     Personnage perso(chest);
 
     //GLuint vao_sphere = generate_vao(cube);
@@ -317,7 +326,7 @@ int main(int argc, char* argv[])
                 perso.move(camera.eventKeyboard(event.key.keysym.scancode));
                 break;
                 //We can add more event, like listening for the keyboard or the mouse. See SDL_Event documentation for more details
-            case SDL_MOUSEMOTION:
+            /*case SDL_MOUSEMOTION:
                 if (mouse_user) {
                     float xoffset = event.motion.x - lastX;
                     float yoffset = lastY - event.motion.y; // reversed since y-coordinates range from bottom to top
@@ -345,7 +354,7 @@ int main(int argc, char* argv[])
                     mouse_user = true;
                 }
 
-                break;
+                break;*/
             }
         }
 

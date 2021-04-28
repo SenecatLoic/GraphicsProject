@@ -18,7 +18,11 @@ public:
 
 	const glm::vec3 getPosition();
 
-	void eventKeyboard(const SDL_Scancode key_event);
+	glm::vec3 eventKeyboard(const SDL_Scancode key_event);
+
+	const glm::vec3 getDirection();
+
+	void setDirection(glm::vec3 direction);
 
 private:
 	glm::vec3 position;

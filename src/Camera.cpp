@@ -12,32 +12,35 @@ const glm::vec3 Camera::getPosition() {
 	return position;
 }
 
-void Camera::eventKeyboard(const SDL_Scancode key_event)
+glm::vec3 Camera::eventKeyboard(const SDL_Scancode key_event)
 {
-    glm::vec3 mouvement(0, 0, 0);
+    glm::vec3 mouvement;
 	switch (key_event) {
         case SDL_SCANCODE_LEFT:
-            position -= glm::normalize(glm::cross(direction, cameraUp)) * speed;
-
+            mouvement = glm::normalize(glm::cross(direction, cameraUp)) * (speed * -1);
+            position += mouvement;
             break;
         case SDL_SCANCODE_RIGHT:
-            position += glm::normalize(glm::cross(direction, cameraUp)) * speed;
-
+            mouvement = glm::normalize(glm::cross(direction, cameraUp)) * speed;
+            position += mouvement;
             break;
         case SDL_SCANCODE_UP:
             glm::vec3 direct = direction;
             direct.y = 0;
-            position += direct * speed;
+            mouvement = direct * speed;
+            position += mouvement;
 
             break;
         case SDL_SCANCODE_DOWN:
-            glm::vec3 direct_d = direction;
-            direct_d.y = 0;
-            position -= direct_d * speed;
+            direct = direction;
+            direct.y = 0;
+            mouvement = (direct * speed * -1.f);
+            position += mouvement;
             break;
         default:
             break;
 	}
+    return mouvement;
 }
 
 const glm::mat4 Camera::getProjectionMatrix() {
@@ -46,4 +49,12 @@ const glm::mat4 Camera::getProjectionMatrix() {
 
 const glm::mat4 Camera::getViewMatrix() {
 	return glm::lookAt(position, position + direction, cameraUp);
+}
+
+void Camera::setDirection(glm::vec3 direction) {
+    this->direction = direction;
+}
+
+const glm::vec3 Camera::getDirection() {
+    return direction;
 }

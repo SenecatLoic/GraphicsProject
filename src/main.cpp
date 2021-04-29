@@ -131,25 +131,27 @@ int main(int argc, char* argv[])
     BodyElement chest(c, vao_chest, glm::vec3(0, 1, 0), m);
     chest.scale(glm::vec3(0.5, 0.7, 0.3));
     chest.translate(glm::vec3(0.5, 0, 0));
-    chest.loadingTexture("texture/earth.png");
-
+    chest.rotate(1.5, glm::vec3(0, 1, 0));
+    chest.loadingTexture("texture/beton.png");
+    
     Sphere s(32, 32);
     GLuint vao_head = generate_vao(s);
     BodyElement head(s, vao_head, glm::vec3(0, 1, 0), m);
     head.scale(glm::vec3(0.5, 0.5, 0.5));
     head.translate(glm::vec3(0, 0.625, 0));
+    head.rotate(3, glm::vec3(0, 1, 0));
     chest.addChilds(&head);
-    head.loadingTexture("texture/earth.png");
-    //head.loadingTexture("texture/earth.png");
+    head.loadingTexture("texture/head.png");
     //Decor d((Geometry)c,vao_decor,glm::vec3(0,0,0));
 
-    /*Cylinder neck_top(32);
+    Cylinder neck_top(32);
     GLuint vao_neck = generate_vao(neck_top);
     BodyElement neck(neck_top, vao_neck, glm::vec3(0, 1, 0), m);
     neck.scale(glm::vec3(0.2, 0.2, 0.15));
     neck.translate(glm::vec3(0, 0.4, 0));
     neck.rotate(1.5, glm::vec3(1, 0, 0));
     chest.addChilds(&neck);
+    neck.loadingTexture("texture/skin.png");
 
     Cube arm_l;
     GLuint vao_arm_left = generate_vao(arm_l);
@@ -157,6 +159,7 @@ int main(int argc, char* argv[])
     arm_left.scale(glm::vec3(0.18, 0.3, 0.2));
     arm_left.translate(glm::vec3(0.35, 0.1, 0));
     chest.addChilds(&arm_left);
+    arm_left.loadingTexture("texture/bleu.png");
 
     Cube arm_r;
     GLuint vao_arm_right = generate_vao(arm_r);
@@ -164,6 +167,7 @@ int main(int argc, char* argv[])
     arm_right.scale(glm::vec3(0.18, 0.3, 0.2));
     arm_right.translate(glm::vec3(-0.35, 0.1, 0));
     chest.addChilds(&arm_right);
+    arm_right.loadingTexture("texture/bleu.png");
 
     Sphere elbow_l(32, 32);
     GLuint vao_elbow_left = generate_vao(elbow_l);
@@ -171,6 +175,7 @@ int main(int argc, char* argv[])
     elbow_left.scale(glm::vec3(0.2015, 0.2015, 0.2015));
     elbow_left.translate(glm::vec3(0, -0.13, 0));
     arm_left.addChilds(&elbow_left);
+    elbow_left.loadingTexture("texture/skin.png");
 
     Sphere elbow_r(32, 32);
     GLuint vao_elbow_right = generate_vao(elbow_r);
@@ -178,6 +183,7 @@ int main(int argc, char* argv[])
     elbow_right.scale(glm::vec3(0.2015, 0.2015, 0.2015));
     elbow_right.translate(glm::vec3(0, -0.13, 0));
     arm_right.addChilds(&elbow_right);
+    elbow_right.loadingTexture("texture/skin.png");
 
     Cylinder forearm_l(32);
     GLuint vao_forearm_left = generate_vao(forearm_l);
@@ -186,6 +192,7 @@ int main(int argc, char* argv[])
     forearm_left.translate(glm::vec3(0, -0.2, 0.1));
     forearm_left.rotate(-1.9, glm::vec3(1, 0, 0));
     elbow_left.addChilds(&forearm_left);
+    forearm_left.loadingTexture("texture/skin.png");
 
     Cylinder forearm_r(32);
     GLuint vao_forearm_right = generate_vao(forearm_r);
@@ -194,64 +201,73 @@ int main(int argc, char* argv[])
     forearm_right.translate(glm::vec3(0, -0.2, 0.1));
     forearm_right.rotate(-1.9, glm::vec3(1, 0, 0));
     elbow_right.addChilds(&forearm_right);
+    forearm_right.loadingTexture("texture/skin.png");
 
     Cylinder thigh_r(32);
     GLuint vao_thigh_right = generate_vao(thigh_r);
     BodyElement thigh_right(thigh_r, vao_thigh_right, glm::vec3(0, 1, 0), m);
-    thigh_right.scale(glm::vec3(0.2, 0.1, 0.5));
+    thigh_right.scale(glm::vec3(0.2, 0.2, 0.5));
     thigh_right.translate(glm::vec3(-0.12, -0.6, 0));
     thigh_right.rotate(1.7, glm::vec3(1, 0, 0));
     chest.addChilds(&thigh_right);
+    thigh_right.loadingTexture("texture/bleu.png");
 
     Cylinder thigh_l(32);
     GLuint vao_thigh_left = generate_vao(thigh_l);
     BodyElement thigh_left(thigh_l, vao_thigh_left, glm::vec3(0, 1, 0), m);
-    thigh_left.scale(glm::vec3(0.2, 0.1, 0.5));
+    thigh_left.scale(glm::vec3(0.2, 0.2, 0.5));
     thigh_left.translate(glm::vec3(0.12, -0.6, 0));
     thigh_left.rotate(1.7, glm::vec3(1, 0, 0));
     chest.addChilds(&thigh_left);
+    thigh_left.loadingTexture("texture/bleu.png");
 
     Sphere knee_l(32, 32);
     GLuint vao_knee_left = generate_vao(knee_l);
     BodyElement knee_left(knee_l, vao_knee_left, glm::vec3(0, 1, 0), m);
-    knee_left.scale(glm::vec3(0.18, 0.18, 0.18));
-    knee_left.translate(glm::vec3(0, 0, 0.25));
+    knee_left.scale(glm::vec3(0.2, 0.2, 0.2));
+    knee_left.translate(glm::vec3(0, 0, 0.3));
     thigh_left.addChilds(&knee_left);
+    knee_left.loadingTexture("texture/skin.png");
 
     Sphere knee_r(32, 32);
     GLuint vao_knee_right = generate_vao(knee_r);
     BodyElement knee_right(knee_r, vao_knee_right, glm::vec3(0, 1, 0), m);
-    knee_right.scale(glm::vec3(0.18, 0.18, 0.18));
-    knee_right.translate(glm::vec3(0, 0, 0.25));
+    knee_right.scale(glm::vec3(0.2, 0.2, 0.2));
+    knee_right.translate(glm::vec3(0, 0, 0.3));
     thigh_right.addChilds(&knee_right);
+    knee_right.loadingTexture("texture/skin.png");
 
     Cylinder leg_r(32);
     GLuint vao_leg_right = generate_vao(leg_r);
     BodyElement leg_right(leg_r, vao_leg_right, glm::vec3(0, 1, 0), m);
-    leg_right.scale(glm::vec3(0.18, 0.095, 0.45));
-    leg_right.translate(glm::vec3(0, 0, 0.28));
+    leg_right.scale(glm::vec3(0.25, 0.15, 0.4));
+    leg_right.translate(glm::vec3(0, 0, 0.33));
     knee_right.addChilds(&leg_right);
+    leg_right.loadingTexture("texture/skin.png");
 
     Cylinder leg_l(32);
     GLuint vao_leg_left = generate_vao(leg_l);
     BodyElement leg_left(leg_l, vao_leg_left, glm::vec3(0, 1, 0), m);
-    leg_left.scale(glm::vec3(0.18, 0.095, 0.45));
-    leg_left.translate(glm::vec3(0, 0, 0.28));
+    leg_left.scale(glm::vec3(0.25, 0.15, 0.4));
+    leg_left.translate(glm::vec3(0, 0, 0.33));
     knee_left.addChilds(&leg_left);
+    leg_left.loadingTexture("texture/skin.png");
 
     Cube foot_l;
     GLuint vao_foot_left = generate_vao(foot_l);
     BodyElement foot_left(foot_l, vao_foot_left, glm::vec3(0, 1, 0), m);
-    foot_left.scale(glm::vec3(0.18, 0.2, 0.2));
+    foot_left.scale(glm::vec3(0.18, 0.2, 0.15));
     foot_left.translate(glm::vec3(0, 0.1, 0.3));
     leg_left.addChilds(&foot_left);
+    foot_left.loadingTexture("texture/black.png");
 
     Cube foot_r;
     GLuint vao_foot_right = generate_vao(foot_r);
     BodyElement foot_right(foot_r, vao_foot_right, glm::vec3(0, 1, 0), m);
-    foot_right.scale(glm::vec3(0.18, 0.2, 0.2));
+    foot_right.scale(glm::vec3(0.18, 0.2, 0.15));
     foot_right.translate(glm::vec3(0, 0.1, 0.3));
     leg_right.addChilds(&foot_right);
+    foot_right.loadingTexture("texture/black.png");
 
     Sphere hand_r(32, 32);
     GLuint vao_hand_right = generate_vao(hand_r);
@@ -259,14 +275,15 @@ int main(int argc, char* argv[])
     hand_right.scale(glm::vec3(0.14, 0.14, 0.14));
     hand_right.translate(glm::vec3(0, 0, -0.15));
     forearm_right.addChilds(&hand_right);
+    hand_right.loadingTexture("texture/skin.png");
 
     Sphere hand_l(32, 32);
     GLuint vao_hand_left = generate_vao(hand_l);
     BodyElement hand_left(hand_l, vao_hand_left, glm::vec3(0, 1, 0), m);
     hand_left.scale(glm::vec3(0.14, 0.14, 0.14));
     hand_left.translate(glm::vec3(0, 0, -0.15));
-    forearm_left.addChilds(&hand_left);*/
-
+    forearm_left.addChilds(&hand_left);
+    hand_left.loadingTexture("texture/skin.png");
     
     Personnage perso(chest);
 

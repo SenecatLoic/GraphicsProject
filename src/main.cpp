@@ -131,7 +131,7 @@ int main(int argc, char* argv[])
     BodyElement chest(c, vao_chest, glm::vec3(0, 1, 0), m);
     chest.scale(glm::vec3(0.5, 0.7, 0.3));
     chest.translate(glm::vec3(0.5, 0, 0));
-    chest.rotate(1.5, glm::vec3(0, 1, 0));
+    //chest.rotate(1.5, glm::vec3(0, 1, 0));
     chest.loadingTexture("texture/beton.png");
     
     Sphere s(32, 32);
@@ -305,16 +305,21 @@ int main(int argc, char* argv[])
     model_light = glm::scale(model_light, glm::vec3(0.2f));
     float n = 0.01f;
     float const speed = 0.03;
-    float lastX = 400;
-    float lastY = 300;
+    /*float lastX = 400;
+    float lastY = 300;*/
     bool mouse_user = true;
     float x_direct = -90.f;
     float y_direct = 0;
     std::stack<glm::mat4> stack;
+    bool ok = false;
 
-    Camera camera(HEIGHT, WIDTH, glm::vec3(0, 1.5, -1.5), glm::vec3(0, -0.5, 1));
-
-
+    Camera camera(HEIGHT, WIDTH, glm::vec3(0.5, 1.5, -2.15), glm::vec3(0.5, 1.5, 0), glm::vec3(0, -0.5, 1));
+    /*float sensitivity = 5.f;
+    float sens = 0.05f;
+    glm::vec3 totalMov(-60,0, 0);
+    //glm::vec3 realPos(0.5, 1.5, -2.15);
+    glm::vec3 realPos(0.5, 1.5, 0);
+    glm::vec3 initDirection(0, -0.8, 1);*/
     //Main application loop
     while (isOpened)
     {
@@ -341,37 +346,56 @@ int main(int argc, char* argv[])
 
             case SDL_KEYDOWN:
                 perso.move(camera.eventKeyboard(event.key.keysym.scancode));
+                if (event.key.keysym.scancode == SDL_SCANCODE_L) {
+                    ok = true;
+                }
                 break;
                 //We can add more event, like listening for the keyboard or the mouse. See SDL_Event documentation for more details
-            /*case SDL_MOUSEMOTION:
-                if (mouse_user) {
+            case SDL_MOUSEMOTION:
+                /*if (mouse_user) {
                     float xoffset = event.motion.x - lastX;
                     float yoffset = lastY - event.motion.y; // reversed since y-coordinates range from bottom to top
+                    
+                    glm::vec3 cam_mouvement(0.f);
 
-                    const float sensitivity = 0.001f;
+                    if (ok) {   
+                        if (xoffset > 0) {
+                            
+                            totalMov.x += (sensitivity * abs(round(xoffset)));
+                        }
+                        else {
+                            totalMov.x -= (sensitivity * abs(round(xoffset)));
+                        }
 
-                    x_direct += xoffset;
-                    y_direct += yoffset;
+                        if (yoffset < 0) {
+                            totalMov.y -= 0.03;
+                        }
+                        else {
+                            totalMov.y += 0.03;
+                        }
+                        
+                        
+                        if (totalMov.y > 0.5) {
+                            totalMov.y = 0.5;
+                        }
+                        if (totalMov.y < -1) {
+                            totalMov.y = -1;
+                        }
+                        printf("%f ", cos(glm::radians(totalMov.x))*2.15);
+                        printf(" %f", sin(glm::radians(totalMov.x)) * 2.15);
+                        printf(" %f\n", initDirection.z);
+                        cam_mouvement.x = cos(glm::radians(totalMov.x))*2;
+                        cam_mouvement.z = sin(glm::radians(totalMov.x))*2;
+                        glm::vec3 direct_movement;
+                        direct_movement.x = -cam_mouvement.x;
+                        direct_movement.z = -cam_mouvement.z;
 
-                    if (y_direct > 89.0f)
-                        y_direct = 89.0f;
-                    if (y_direct < -89.0f)
-                        y_direct = -89.0f;
-
-                    glm::vec3 direction;
-                    direction.x = cos(glm::radians(x_direct)) * cos(glm::radians(y_direct));
-                    direction.y = sin(glm::radians(y_direct));
-                    direction.z = sin(glm::radians(x_direct)) * cos(glm::radians(y_direct));
-
-                    camera.setDirection(glm::normalize(direction));
-                    mouse_user = false;
-                    SDL_WarpMouseInWindow(window, 400, 300);
-                }
-                else {
-                    mouse_user = true;
-                }
-
-                break;*/
+                        camera.setPosition(glm::vec3(realPos.x + cam_mouvement.x, realPos.y + totalMov.y ,realPos.z + cam_mouvement.z));
+                        camera.setDirection(glm::vec3(initDirection.x + direct_movement.x, initDirection.y, initDirection.z + direct_movement.z));
+                    }*/
+                camera.eventMouse(event);
+                SDL_WarpMouseInWindow(window, 400, 300);
+                break;
             }
         }
 

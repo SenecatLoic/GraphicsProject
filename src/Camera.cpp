@@ -24,27 +24,24 @@ glm::vec3 Camera::eventKeyboard(const SDL_Scancode key_event)
 	switch (key_event) {
         case SDL_SCANCODE_LEFT:
             mouvement = glm::normalize(glm::cross(direction, cameraUp)) * (speed * -1);
-            position += mouvement;
-            objectPosition += mouvement;
+
             break;
         case SDL_SCANCODE_RIGHT:
             mouvement = glm::normalize(glm::cross(direction, cameraUp)) * speed;
-            position += mouvement;
-            objectPosition += mouvement;
+            /*position += mouvement;
+            objectPosition += mouvement;*/
             break;
         case SDL_SCANCODE_UP:
             glm::vec3 direct = direction;
             direct.y = 0;
             mouvement = direct * speed;
-            position += mouvement;
-            objectPosition += mouvement;
+
             break;
         case SDL_SCANCODE_DOWN:
             direct = direction;
             direct.y = 0;
             mouvement = (direct * speed * -1.f);
-            position += mouvement;
-            objectPosition += mouvement;
+
             break;
         default:
             break;
@@ -81,8 +78,8 @@ void Camera::eventMouse(SDL_Event event) {
             totalMov.y = -1;
         }
 
-        cam_mouvement.x = cos(glm::radians(totalMov.x)) * 2;
-        cam_mouvement.z = sin(glm::radians(totalMov.x)) * 2;
+        cam_mouvement.x = cos(glm::radians(totalMov.x)) * 3;
+        cam_mouvement.z = sin(glm::radians(totalMov.x)) * 3;
         glm::vec3 direct_movement;
         direct_movement.x = -cam_mouvement.x;
         direct_movement.z = -cam_mouvement.z;
@@ -113,4 +110,5 @@ const glm::vec3 Camera::getDirection() {
 
 void Camera::move(glm::vec3 mouvement) {
     position += mouvement;
+    objectPosition += mouvement;
 }

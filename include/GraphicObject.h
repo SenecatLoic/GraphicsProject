@@ -30,6 +30,15 @@ public:
 	void rotate(float angle,glm::vec3 axes);
 	void scale(glm::vec3 v);
 	void loadingTexture(const char* path);
+	//renvoie s'il y a collision, on peut bouger l'objet appelant
+	bool collision(GraphicObject& object,glm::vec3 mouvement = glm::vec3(0,0,0));
+	bool collisionX(GraphicObject& object, glm::vec3 mouvement = glm::vec3(0, 0, 0));
+	bool collisionY(GraphicObject& object, glm::vec3 mouvement = glm::vec3(0, 0, 0));
+	bool collisionZ(GraphicObject& object, glm::vec3 mouvement = glm::vec3(0, 0, 0));
+	float getWidth();
+	float getHeight();
+	void movePosition(glm::vec3 move);
+	glm::vec3 getPosition();
 protected:
 	glm::vec3 position;
 	GLuint vao;
@@ -37,6 +46,10 @@ protected:
 	glm::mat4 model;
 	glm::mat4 localTransformation;
 	GLuint textureID;
+	//la moitié de la taille de l'objet
+	float width;
+	float height;
+	float depth;
 };
 
 #endif

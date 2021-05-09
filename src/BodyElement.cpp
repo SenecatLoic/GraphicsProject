@@ -1,7 +1,6 @@
 #include "BodyElement.h"
 #include <Camera.h>
-
-
+#include <queue>
 
 BodyElement::BodyElement() {
 }
@@ -15,9 +14,29 @@ void BodyElement::addChilds(BodyElement* child) {
     childs.push_back(child);
 }
 
-const std::vector<BodyElement*> BodyElement::getChilds() {
+void BodyElement::translate(glm::vec3 move){
+    GraphicObject::translate(move);
+    BodyElement* current;
+    std::queue<BodyElement*> file;
+    file.push(this);
+
+    while (!file.empty()) {
+        current = file.front();
+        file.pop();
+        
+        for (BodyElement* child : current->getChilds()) {
+            child->movePosition(move);
+            file.push(child);
+            
+        }
+    }
+}
+
+std::vector<BodyElement*> BodyElement::getChilds() {
     return childs;
 }
+
+
 
 glm::mat4 BodyElement::getModel() {
     return model;
@@ -77,8 +96,9 @@ void BodyElement::draw(Shader* shader, std::stack<glm::mat4> stack, glm::mat4 pa
         //Dessin
         glDrawArrays(GL_TRIANGLES, 0, getNbVertices());
         glBindTexture(GL_TEXTURE_2D, 0);
+
         for (BodyElement* child : childs){
-            child->draw(shader, stack, matrixModelView,camera, light);
+            child->draw(shader, stack, matrixModelView, camera, light);            
         }
             
         stack.pop();

@@ -6,22 +6,26 @@
 class CollisionElement {
 
 public:
-	CollisionElement(BodyElement* objectPunch, int countAnimation = 30, float speed = 0.01f);
-	void addCollision(BodyElement* object);
+	CollisionElement(BodyElement& objectPunch, BodyElement& object, int countAnimation = 5,int countParticle = 10, float speed = 0.01f);
+	void setCollision(BodyElement& object);
 	int getCountAnimation();
+	int getCountParticle();
 	int getBaseCountAnimation();
 	void setCountAnimation(int n);
+	void setCountParticle(int n);
 	float getSpeed();
-	std::vector<BodyElement*> getCollisionObjs();
-	BodyElement* getObjectPunch();
+	BodyElement& getCollisionObj();
+	BodyElement& getObjectPunch();
+	CollisionElement& operator=(const CollisionElement&);
 private:
 	// objet en mouvement qui arrive sur d'autres objets 
-	BodyElement* objectPunch;
+	BodyElement& objectPunch;
 	//objet qui on reçu le coup
-	std::vector<BodyElement*> collisionObjs;
+	BodyElement& other_object;
 	//Nombre de pas pour l'animation
 	int countAnimation;
 	int baseCountAnimation;
+	int countParticle;
 	float speed;
 };
 

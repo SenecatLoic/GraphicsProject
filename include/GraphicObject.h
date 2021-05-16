@@ -6,7 +6,9 @@
 #include "Geometry.h"
 #include <Shader.h>
 #include <stack>
+#include <vector>
 #include <Camera.h>
+#define INDICE_TO_PTR(x) ((void*)(x))
 
 struct material {
 	float ka;
@@ -38,18 +40,26 @@ public:
 	float getWidth();
 	float getHeight();
 	void movePosition(glm::vec3 move);
-	glm::vec3 getPosition();
+	const glm::vec3 getPosition();
+	glm::vec3 getMin();
+	glm::vec3 getMax();
+
 protected:
 	glm::vec3 position;
+	glm::vec3 max;
+	glm::vec3 min;
+	
 	GLuint vao;
 	material material;
 	glm::mat4 model;
 	glm::mat4 localTransformation;
 	GLuint textureID;
+	glm::vec3 last_rotation;
 	//la moitié de la taille de l'objet
 	float width;
 	float height;
 	float depth;
+	float angle;
 };
 
 #endif

@@ -12,6 +12,8 @@
 #include "Shader.h"
 #include "GraphicObject.h"
 
+extern int id_index;
+
 class BodyElement : public GraphicObject {
 
 public:
@@ -22,10 +24,11 @@ public:
 	void draw(Shader* shader, std::stack<glm::mat4> stack,glm::mat4 parentModel,Camera camera, struct light light);
 	glm::mat4 getModel();
 	virtual void translate(glm::vec3 move);
-
+	int id;
 
 private:
 	std::vector<BodyElement*> childs;
+	
 };
 
 #endif

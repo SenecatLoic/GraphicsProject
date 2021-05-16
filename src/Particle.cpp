@@ -1,49 +1,17 @@
-#include "BodyElement.h"
+#include "Particle.h"
 #include <Camera.h>
 #include <queue>
 
-int id_index = 0;
-
-BodyElement::BodyElement() {
+Particle::Particle() {
 }
 
-BodyElement::BodyElement(Geometry geometry, GLuint vao, glm::vec3 position, struct material material)
+Particle::Particle(Geometry geometry, GLuint vao, glm::vec3 position, struct material material)
     : GraphicObject(geometry, vao, position, material)
 {
-    this->id = id_index;
-    id_index++;
+
 }
 
-void BodyElement::addChilds(BodyElement* child) {
-    childs.push_back(child);
-}
-
-void BodyElement::translate(glm::vec3 move){
-    GraphicObject::translate(move);
-    BodyElement* current;
-    std::queue<BodyElement*> file;
-    file.push(this);
-
-    while (!file.empty()) {
-        current = file.front();
-        file.pop();
-        
-        for (BodyElement* child : current->getChilds()) {
-            child->movePosition(move);
-            file.push(child);
-        }
-    }
-}
-
-std::vector<BodyElement*> BodyElement::getChilds() {
-    return childs;
-}
-
-glm::mat4 BodyElement::getModel() {
-    return model;
-}
-
-void BodyElement::draw(Shader* shader, std::stack<glm::mat4> stack, glm::mat4 parentModel, Camera camera, struct light light) {
+void Particle::draw(Shader* shader, std::stack<glm::mat4> stack, glm::mat4 parentModel, Camera camera, struct light light) {
     stack.push(stack.top() * model);
 
     glm::mat4 mat = stack.top();
@@ -52,7 +20,7 @@ void BodyElement::draw(Shader* shader, std::stack<glm::mat4> stack, glm::mat4 pa
     glm::mat4 matrixModelView = parentModel * model;
     //glm::mat4 mat = stack.top() * model * localTransformation;
     glm::mat3 inv_model = glm::inverse(glm::mat3(matrixModelView));
-    
+
     glUseProgram(shader->getProgramID());
     {
         glBindVertexArray(vao);
@@ -84,20 +52,7 @@ void BodyElement::draw(Shader* shader, std::stack<glm::mat4> stack, glm::mat4 pa
         glUniform3fv(mat_color, 1, glm::value_ptr(material.color));
         GLint camera_pos = glGetUniformLocation(shader->getProgramID(), "camera_pos");
         glUniform3fv(camera_pos, 1, glm::value_ptr(camera.getPosition()));
-
-        //Texture
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, textureID);
-        GLint uTexture = glGetUniformLocation(shader->getProgramID(), "uTexture");
-        glUniform1i(uTexture, 0);
-        //Dessin
         glDrawArrays(GL_TRIANGLES, 0, getNbVertices());
-        glBindTexture(GL_TEXTURE_2D, 0);
-
-        for (BodyElement* child : childs){
-            child->draw(shader, stack, matrixModelView, camera, light);            
-        }
-            
         stack.pop();
     }
     glUseProgram(0);

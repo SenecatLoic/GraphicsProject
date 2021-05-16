@@ -52,7 +52,7 @@ glm::vec3 Camera::eventKeyboard(const SDL_Scancode key_event)
 void Camera::eventMouse(SDL_Event event) {
     float xoffset = event.motion.x - midX;
     float yoffset = midY - event.motion.y; // reversed since y-coordinates range from bottom to top
-    float sensitivity = 5.f;
+    float sensitivity = 2.f;
     glm::vec3 cam_mouvement(0.f);
 
         if (xoffset > 0) {
